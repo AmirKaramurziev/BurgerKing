@@ -1,0 +1,8 @@
+.imputGroup{
+    margin: 0 auto;
+    width: 400px;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
