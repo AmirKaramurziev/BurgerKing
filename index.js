@@ -33,16 +33,24 @@ app.post("/api/registration",(req,res)=>{
     usermodul.register(
         req.body,
             (err)=>{
+                console.log(req.body)
                 if(err){
                     return res.status(500).send(err);
                 } else {res.status(200).send([{status:"success"}]);
-                console.log(req.body)
             }     
         }
     )
 })
 
-
+app.post("/api/login",(req,res)=>{
+    usermodul.login(
+        req.body,(err,user)=>{
+            if(err){
+                return res.status(500).send(err);
+            }else{res.status(200).send(user)};
+        }
+    )
+})
 //подключение порта
 app.listen(PORT ,(err)=>{
     if(err)console.log("hey", err);

@@ -3,10 +3,14 @@ import { InputGroup, InputGroupAddon, InputGroupText, Input } from 'reactstrap';
 import "./register.css"
 import { Button } from 'reactstrap';
 import axios from 'axios';
+import {Redirect} from 'react-router-dom';
+import {Link} from 'react-router-dom';
+import HeaderSystem from '../../header/header';
 class RegisterPage extends React.Component{
     constructor(props){
         super(props);
         this.state={
+            toLoginPage:false,
             form:{
                 email:"",
                 username:"",
@@ -14,7 +18,8 @@ class RegisterPage extends React.Component{
                 first_name:"",
                 last_name:"",
                 address:""
-            }
+            },
+            lookPass:false,
         }
     }
     handleChange(e,type){
@@ -34,15 +39,28 @@ class RegisterPage extends React.Component{
             address:this.state.form.address
         })
         .then(function(res){
-            
+            _this.setState({toLoginPage:true})
         })
         .catch(function(err){
 
         })
     }
+    lookPass(e){
+        let typeOne = document.getElementById("password")
+        if(this.state.lookPass === false){
+            typeOne.type = "text"
+            this.setState({lookPass:true})
+        }else if(this.state.lookPass === true){
+            typeOne.type = "password"
+            this.setState({lookPass:false})
+        }
+    }
     render(){
+        if(this.state.toLoginPage==true){
+            return <Redirect to="/login"/>
+        }
         return(
-            <div>
+            <div>        
                 Register Page
                 <div className="imputGroup">
                     <InputGroup>
@@ -52,7 +70,8 @@ class RegisterPage extends React.Component{
                         <Input value={this.state.form.username}   onChange={(e)=>this.handleChange(e,"username")}   placeholder="username" />
                     </InputGroup>
                     <InputGroup>
-                        <Input value={this.state.form.password}   onChange={(e)=>this.handleChange(e,"password")}   placeholder="password" />
+                        <Input value={this.state.form.password} 
+                         type="password" id="password"  onChange={(e)=>this.handleChange(e,"password")}   placeholder="password" />
                     </InputGroup>
                     <InputGroup>
                         <Input value={this.state.form.first_name} onChange={(e)=>this.handleChange(e,"first_name")} placeholder="first_name" />
@@ -65,6 +84,16 @@ class RegisterPage extends React.Component{
                     </InputGroup>
                     <Button onClick={(e)=>this.SuccessToRegist(e)} color="primary">success to regist</Button>
                 </div>
+                <Link to="/login">already have acc, go to login page</Link>
+
+
+                {this.state.form.password === ""?null:
+                <div className="lookpass" onClick={(e)=>this.lookPass(e)}>
+                    {this.state.lookPass === false?
+                    <p>посмотреть пароль</p>:<p>закрыть пароль</p>}
+                </div>}
+
+
             </div>
         )
     }
