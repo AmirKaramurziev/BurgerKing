@@ -2,7 +2,7 @@
 const express = require("express");
 const mongoose = require('mongoose');
 const cors = require("cors");
-const usermodul = require('./modules/users')
+
 const db_settings = require('./mongo-op.js')
 const bodyParser = require('body-parser');
 const app = express();
@@ -22,7 +22,8 @@ app.use(cors())
 app.use(bodyParser.urlencoded({extended:true}));
 //подключение базы данных
 //модели
-
+const usermodul = require('./modules/users')
+const productmodul = require('./modules/products')
 //middlewares
 const ValidMiddleWare = (req,res,next)=>{
     
@@ -50,6 +51,19 @@ app.post("/api/login",(req,res)=>{
             }else{res.status(200).send(user)};
         }
     )
+})
+app.get("/api/get_products",(req,res)=>{
+    productmodul.getAll((err,products)=>{
+        if(err)return res.status(500).send(err);
+        else return res.status(200).send(products);
+    })
+})
+//создание продуктов
+app.post("/api/create_product",(req,res)=>{
+    productmodul.add(req.body,(err)=>{
+        if(err)return res.status(500).send(err);
+        else return res.status(200).send({status:"success"})
+    })
 })
 //подключение порта
 app.listen(PORT ,(err)=>{
