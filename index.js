@@ -42,7 +42,20 @@ app.post("/api/registration",(req,res)=>{
         }
     )
 })
-
+app.post("/api/delete_product",(req,res)=>{
+    console.log(req.body)
+    productmodul.deleteProd(req.body,(err,products)=>{
+        if(err)return res.status(500).send(err);
+        else return res.status(200).send(products)
+    })
+})
+app.post("/api/update_prod",(req,res)=>{
+    productmodul.update(req.body,(err)=>{
+        if(err){
+            return res.status(500).send(err);
+        }else{res.status(200).send({status:"success"})};
+    })
+})
 app.post("/api/login",(req,res)=>{
     usermodul.login(
         req.body,(err,user)=>{

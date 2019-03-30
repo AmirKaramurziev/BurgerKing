@@ -39,7 +39,8 @@ class CreateNewProduct extends React.Component{
         })
         .then(function(res){
             console.log(res.data)
-            this.props.toggle();
+            _this.props.toggle();
+            _this.props.refresh();
         })
         .catch(function(err){
 

@@ -20,3 +20,12 @@ module.exports.getAll = (callback)=>{
         else return callback(null,products);
     })
 }
+module.exports.deleteProd = (data,callback)=>{
+    Product.deleteOne({name:data.name,amount:data.amount,price:data.price}, function (err) {
+        if (err) return handleError(err);
+        callback();
+    });
+}
+module.exports.update = (data,callback)=>{
+    Product.findByIdAndUpdate(data._id,data,callback);
+}
