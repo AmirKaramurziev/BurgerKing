@@ -59,9 +59,9 @@ app.post("/api/update_prod",(req,res)=>{
 app.post("/api/login",(req,res)=>{
     usermodul.login(
         req.body,(err,user)=>{
-            if(err){
-                return res.status(500).send(err);
-            }else{res.status(200).send(user)};
+            if(err)return res.status(500).send(err);
+            if(!user)return res.status(401).send(err);
+            else{res.status(200).send(user)};
         }
     )
 })

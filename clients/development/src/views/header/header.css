@@ -28,4 +28,19 @@
     color: white;
     margin: 0 auto;
     cursor: pointer;
+}.username{
+    color: white;
+    position: absolute;
+
+    right: 300px;
+    cursor: pointer;
+}.userOpi{
+    
 }
+
+
+
+
+
+
+
